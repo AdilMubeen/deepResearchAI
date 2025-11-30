@@ -1,0 +1,190 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Deep Research AI Agent</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+    <script src="https://cdn.jsdelivr.net/npm/marked/marked.min.js"></script>
+</head>
+<body>
+    <div class="container">
+        <header>
+            <div class="logo">
+                <svg width="32" height="32" viewBox="0 0 32 32" fill="none">
+                    <circle cx="16" cy="16" r="14" stroke="currentColor" stroke-width="2"/>
+                    <path d="M16 8v8l5 3" stroke="currentColor" stroke-width="2" stroke-linecap="round"/>
+                </svg>
+                <h1>Deep Research AI</h1>
+            </div>
+            <p class="subtitle">Multi-LLM Risk Assessment Agent</p>
+        </header>
+
+        <div class="tabs">
+            <button class="tab-btn" data-target="elizabeth-holmes">Elizabeth Holmes</button>
+            <button class="tab-btn" data-target="sam-bankman">Sam Bankman-Fried</button>
+            <button class="tab-btn" data-target="martin-shkreli">Martin Shkreli</button>
+            <button class="tab-btn active" data-target="new-research">New Research</button>
+        </div>
+
+        <main>
+            <div id="elizabeth-holmes" class="tab-content">
+                <div id="results-elizabeth-holmes" class="results-container"></div>
+                <div class="preset-actions">
+                    <button class="submit-btn" onclick="runPreset('Elizabeth Holmes', 'Founder of Theranos', 'fraud, legal issues', '2010-2024', 'healthcare, biotech', 'Silicon Valley')">
+                        Re-run Deep Research
+                    </button>
+                </div>
+            </div>
+
+            <div id="sam-bankman" class="tab-content">
+                <div id="results-sam-bankman" class="results-container"></div>
+                <div class="preset-actions">
+                    <button class="submit-btn" onclick="runPreset('Sam Bankman-Fried', 'Founder of FTX', 'fraud, bankruptcy, criminal charges', '2019-2024', 'cryptocurrency, finance', 'Bahamas')">
+                        Re-run Deep Research
+                    </button>
+                </div>
+            </div>
+
+            <div id="martin-shkreli" class="tab-content">
+                <div id="results-martin-shkreli" class="results-container"></div>
+                <div class="preset-actions">
+                    <button class="submit-btn" onclick="runPreset('Martin Shkreli', 'Pharmaceutical executive', 'fraud, legal issues, price gouging', '2010-2024', 'pharmaceuticals', 'New York')">
+                        Re-run Deep Research
+                    </button>
+                </div>
+            </div>
+
+            <div id="new-research" class="tab-content active">
+                <form id="researchForm">
+                    <div class="form-group required">
+                        <label for="target">
+                            <span class="label-text">Target Name</span>
+                            <span class="required-star">*</span>
+                        </label>
+                        <input type="text" id="target" name="target" placeholder="e.g., Elizabeth Holmes" required autocomplete="off">
+                    </div>
+
+                    <div class="form-section">
+                        <h3>Optional Context <span class="optional-tag">Improves accuracy</span></h3>
+                        
+                        <div class="form-group">
+                            <label for="context">Background</label>
+                            <input type="text" id="context" name="context" placeholder="e.g., Former CEO of Theranos" autocomplete="off">
+                        </div>
+
+                        <div class="form-row">
+                            <div class="form-group">
+                                <label for="focus">Focus Areas</label>
+                                <input type="text" id="focus" name="focus" placeholder="e.g., fraud, legal issues" autocomplete="off">
+                            </div>
+                            <div class="form-group">
+                                <label for="time_period">Time Period</label>
+                                <input type="text" id="time_period" name="time_period" placeholder="e.g., 2010-2023" autocomplete="off">
+                            </div>
+                        </div>
+
+                        <div class="form-row">
+                            <div class="form-group">
+                                <label for="industry">Industry</label>
+                                <input type="text" id="industry" name="industry" placeholder="e.g., healthcare, biotech" autocomplete="off">
+                            </div>
+                            <div class="form-group">
+                                <label for="location">Location</label>
+                                <input type="text" id="location" name="location" placeholder="e.g., Silicon Valley" autocomplete="off">
+                            </div>
+                        </div>
+                    </div>
+
+                    <button type="submit" id="submitBtn" class="submit-btn">
+                        <span class="btn-text">Start Deep Research</span>
+                        <span class="btn-loader" style="display: none;">
+                            <span class="spinner"></span> Researching...
+                        </span>
+                    </button>
+                </form>
+                <div id="results-new-research" class="results-container" style="display:none;"></div>
+            </div>
+        </main>
+
+        <footer>
+            <p>Powered by GPT-4, Claude, Gemini & Perplexity</p>
+        </footer>
+    </div>
+
+    <div id="resultsTemplate" style="display:none;">
+        <div class="results-header">
+            <h2>Risk Assessment: <span class="result-target"></span></h2>
+            <button class="download-btn download-pdf">
+                <svg width="20" height="20" viewBox="0 0 20 20" fill="none">
+                    <path d="M10 14L6 10h3V3h2v7h3l-4 4z" fill="currentColor"/>
+                    <path d="M17 14v3H3v-3H1v3a2 2 0 002 2h14a2 2 0 002-2v-3h-2z" fill="currentColor"/>
+                </svg>
+                Download PDF
+            </button>
+        </div>
+
+        <div class="two-column-layout">
+            <div class="report-column">
+                <div class="report-content"></div>
+            </div>
+
+            <div class="stats-column">
+                <div class="stats-section">
+                    <h3>Risk Breakdown</h3>
+                    <div class="risk-items">
+                        <div class="risk-item">
+                            <span class="risk-label">Financial</span>
+                            <span class="risk-value score-financial">--</span>
+                        </div>
+                        <div class="risk-item">
+                            <span class="risk-label">Legal</span>
+                            <span class="risk-value score-legal">--</span>
+                        </div>
+                        <div class="risk-item">
+                            <span class="risk-label">Reputational</span>
+                            <span class="risk-value score-reputational">--</span>
+                        </div>
+                        <div class="risk-item">
+                            <span class="risk-label">Association</span>
+                            <span class="risk-value score-association">--</span>
+                        </div>
+                        <div class="risk-item">
+                            <span class="risk-label">Integrity</span>
+                            <span class="risk-value score-integrity">--</span>
+                        </div>
+                        <div class="risk-item">
+                            <span class="risk-label">Operational</span>
+                            <span class="risk-value score-operational">--</span>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="stats-section">
+                    <h3>Research Stats</h3>
+                    <div class="stat-items">
+                        <div class="stat-item">
+                            <span class="stat-value count-sources">--</span>
+                            <span class="stat-label">Sources</span>
+                        </div>
+                        <div class="stat-item">
+                            <span class="stat-value count-people">--</span>
+                            <span class="stat-label">People</span>
+                        </div>
+                        <div class="stat-item">
+                            <span class="stat-value count-orgs">--</span>
+                            <span class="stat-label">Organizations</span>
+                        </div>
+                        <div class="stat-item">
+                            <span class="stat-value count-events">--</span>
+                            <span class="stat-label">Events</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script src="{{ url_for('static', filename='script.js') }}"></script>
+</body>
+</html>

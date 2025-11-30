@@ -1,0 +1,135 @@
+{
+  "test_personas": [
+    {
+      "name": "Elizabeth Holmes",
+      "description": "Founder and former CEO of Theranos",
+      "expected_findings": {
+        "high_risk_areas": [
+          "Fraud conviction for wire fraud and conspiracy",
+          "Theranos blood testing fraud scandal",
+          "Securities fraud charges",
+          "Criminal trial and conviction in 2022",
+          "11-year prison sentence"
+        ],
+        "key_entities": [
+          "Theranos (company)",
+          "Ramesh 'Sunny' Balwani (COO and former partner)",
+          "Walgreens (partnership)",
+          "Safeway (partnership)",
+          "George Shultz (board member)"
+        ],
+        "timeline_events": [
+          "2003: Founded Theranos",
+          "2013-2015: Peak valuation at $9 billion",
+          "2015: Wall Street Journal exposé",
+          "2018: Criminal charges filed",
+          "2022: Convicted on multiple counts",
+          "2023: Began prison sentence"
+        ],
+        "expected_risk_scores": {
+          "financial": "90-100",
+          "legal": "95-100",
+          "reputational": "95-100",
+          "association": "60-80",
+          "integrity": "90-100",
+          "operational": "80-95"
+        },
+        "overall_risk": "90-95"
+      }
+    },
+    {
+      "name": "Sam Bankman-Fried",
+      "description": "Founder and former CEO of FTX cryptocurrency exchange",
+      "expected_findings": {
+        "high_risk_areas": [
+          "FTX collapse and bankruptcy",
+          "Wire fraud and conspiracy charges",
+          "Misuse of customer funds",
+          "Criminal conviction 2023",
+          "25-year prison sentence"
+        ],
+        "key_entities": [
+          "FTX (cryptocurrency exchange)",
+          "Alameda Research (trading firm)",
+          "Caroline Ellison (CEO of Alameda, cooperating witness)",
+          "Gary Wang (CTO, cooperating witness)",
+          "Bahamian government"
+        ],
+        "timeline_events": [
+          "2017: Founded Alameda Research",
+          "2019: Founded FTX",
+          "2021-2022: Peak valuation $32 billion",
+          "Nov 2022: FTX collapse and bankruptcy",
+          "Dec 2022: Arrested in Bahamas",
+          "Nov 2023: Convicted on all counts",
+          "Mar 2024: Sentenced to 25 years"
+        ],
+        "expected_risk_scores": {
+          "financial": "95-100",
+          "legal": "95-100",
+          "reputational": "95-100",
+          "association": "70-85",
+          "integrity": "95-100",
+          "operational": "85-95"
+        },
+        "overall_risk": "92-98"
+      }
+    },
+    {
+      "name": "Martin Shkreli",
+      "description": "Former pharmaceutical executive and hedge fund manager",
+      "expected_findings": {
+        "high_risk_areas": [
+          "Securities fraud conviction",
+          "Price gouging of Daraprim drug",
+          "Ponzi-like scheme at hedge fund",
+          "7-year prison sentence",
+          "Lifetime ban from pharmaceutical industry"
+        ],
+        "key_entities": [
+          "Turing Pharmaceuticals",
+          "Retrophin (biopharmaceutical company)",
+          "MSMB Capital Management (hedge fund)",
+          "Vyera Pharmaceuticals",
+          "Wu-Tang Clan (music controversy)"
+        ],
+        "timeline_events": [
+          "2009-2011: Founded MSMB hedge funds",
+          "2011: Founded Retrophin",
+          "2015: Acquired Daraprim and raised price 5000%",
+          "2015: Arrested on securities fraud charges",
+          "2017: Convicted",
+          "2018: Sentenced to 7 years",
+          "2022: Released from prison"
+        ],
+        "expected_risk_scores": {
+          "financial": "85-95",
+          "legal": "85-95",
+          "reputational": "90-100",
+          "association": "60-75",
+          "integrity": "85-95",
+          "operational": "70-85"
+        },
+        "overall_risk": "82-92"
+      }
+    }
+  ],
+  "evaluation_criteria": {
+    "description": "Use these personas to evaluate the agent's research depth and accuracy",
+    "success_metrics": [
+      "Agent identifies at least 80% of high_risk_areas",
+      "Agent extracts at least 70% of key_entities",
+      "Agent captures at least 60% of timeline_events",
+      "Risk scores fall within expected ranges (±10 points)",
+      "Overall risk assessment matches expected range"
+    ],
+    "deep_facts_test": [
+      "Can the agent find specific legal case details?",
+      "Can the agent identify board members or key associates?",
+      "Can the agent discover financial details (funding rounds, valuations)?",
+      "Can the agent trace connections between entities?",
+      "Can the agent build an accurate timeline from multiple sources?"
+    ]
+  }
+}
+
