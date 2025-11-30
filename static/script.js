@@ -96,7 +96,7 @@ function displayResults(data, container) {
     container.innerHTML = template;
     
     container.querySelector('.result-target').textContent = data.target;
-    container.querySelector('.report-content').innerHTML = marked.parse(data.full_report_markdown || 'No report generated');
+    container.querySelector('.report-content').innerHTML = marked.parse(data.full_report_markdown || data.report || 'No report generated');
     
     container.querySelector('.score-financial').textContent = data.risk_breakdown.financial || '--';
     container.querySelector('.score-legal').textContent = data.risk_breakdown.legal || '--';
@@ -105,16 +105,20 @@ function displayResults(data, container) {
     container.querySelector('.score-integrity').textContent = data.risk_breakdown.integrity || '--';
     container.querySelector('.score-operational').textContent = data.risk_breakdown.operational || '--';
     
-    container.querySelector('.count-sources').textContent = data.stats.sources || 0;
-    container.querySelector('.count-people').textContent = data.stats.people || 0;
-    container.querySelector('.count-orgs').textContent = data.stats.organizations || 0;
-    container.querySelector('.count-events').textContent = data.stats.events || 0;
+    // Handle both preset format (data.stats) and research format (data.sources/data.entities)
+    const stats = data.stats || {};
+    const entities = data.entities || {};
+    
+    container.querySelector('.count-sources').textContent = stats.sources || data.sources || 0;
+    container.querySelector('.count-people').textContent = stats.people || entities.people || 0;
+    container.querySelector('.count-orgs').textContent = stats.organizations || entities.organizations || 0;
+    container.querySelector('.count-events').textContent = stats.events || entities.timeline || 0;
     
     // Store report_id for download
-    const reportId = data.report_id;
+    const reportId = data.report_id || data.report_file;
     container.querySelector('.download-pdf').addEventListener('click', () => {
         if (reportId) {
-            window.location.href = '/download_pdf/' + reportId;
+            window.location.href = '/download/' + reportId;
         } else {
             alert('Report ID not found. Please regenerate the report.');
         }

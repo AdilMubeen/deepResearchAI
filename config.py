@@ -18,9 +18,9 @@ class Config:
     FIRECRAWL_API_KEY = os.getenv("FIRECRAWL_API_KEY")
 
     # Research parameters
-    MAX_SEARCH_DEPTH = int(os.getenv("MAX_SEARCH_DEPTH", "5"))
-    MAX_QUERIES_PER_SEARCH = int(os.getenv("MAX_QUERIES_PER_SEARCH", "8"))
-    MAX_RESULTS_PER_QUERY = int(os.getenv("MAX_RESULTS_PER_QUERY", "5"))
+    MAX_SEARCH_DEPTH = int(os.getenv("MAX_SEARCH_DEPTH", "3"))
+    MAX_QUERIES_PER_SEARCH = int(os.getenv("MAX_QUERIES_PER_SEARCH", "5"))
+    MAX_RESULTS_PER_QUERY = int(os.getenv("MAX_RESULTS_PER_QUERY", "3"))
     DEFAULT_BUDGET = float(os.getenv("DEFAULT_BUDGET", "20.0"))
 
     # Output paths

@@ -4,6 +4,8 @@ from agent import run_research
 import json
 from datetime import datetime
 import io
+import sys
+import os
 from reportlab.lib.pagesizes import letter
 from reportlab.lib.styles import getSampleStyleSheet, ParagraphStyle
 from reportlab.lib.units import inch
@@ -12,6 +14,27 @@ from reportlab.lib import colors
 
 app = Flask(__name__)
 app.temp_reports = {}
+
+# Ensure logs directory exists
+os.makedirs('logs', exist_ok=True)
+
+class LogCapture:
+    """Capture stdout/stderr to both console and file."""
+    def __init__(self, log_file):
+        self.log_file = log_file
+        self.terminal = sys.stdout
+        self.log = open(log_file, 'w')
+    
+    def write(self, message):
+        self.terminal.write(message)
+        self.log.write(message)
+    
+    def flush(self):
+        self.terminal.flush()
+        self.log.flush()
+    
+    def close(self):
+        self.log.close()
 
 # Pre-made research data
 PRESET_REPORTS = {
@@ -111,15 +134,27 @@ def research():
         if not target:
             return jsonify({'error': 'Target name is required'}), 400
         
-        final_state = run_research(
-            target=target,
-            max_depth=3,
-            context=request.form.get('context', '').strip(),
-            focus=request.form.get('focus', '').strip(),
-            time_period=request.form.get('time_period', '').strip(),
-            industry=request.form.get('industry', '').strip(),
-            location=request.form.get('location', '').strip()
-        )
+        # Setup log capture
+        timestamp = datetime.now().strftime('%Y%m%d_%H%M%S')
+        safe_name = "".join(c if c.isalnum() else "_" for c in target)
+        log_file = f"logs/{safe_name}_{timestamp}.log"
+        log_capture = LogCapture(log_file)
+        old_stdout = sys.stdout
+        sys.stdout = log_capture
+        
+        try:
+            final_state = run_research(
+                target=target,
+                max_depth=3,
+                context=request.form.get('context', '').strip(),
+                focus=request.form.get('focus', '').strip(),
+                time_period=request.form.get('time_period', '').strip(),
+                industry=request.form.get('industry', '').strip(),
+                location=request.form.get('location', '').strip()
+            )
+        finally:
+            sys.stdout = old_stdout
+            log_capture.close()
         
         # Parse risk and entity data
         try:
@@ -133,10 +168,10 @@ def research():
             entities = {}
         
         # Store report for download
-        timestamp = datetime.now().strftime('%Y%m%d_%H%M%S')
-        safe_name = "".join(c if c.isalnum() else "_" for c in target)
         report_filename = f"{safe_name}_{timestamp}.md"
         app.temp_reports[report_filename] = final_state.get('final_report', '')
+        
+        print(f"✓ Execution log saved: {log_file}")
         
         return jsonify({
             'success': True,
@@ -158,9 +193,13 @@ def research():
             },
             'sources': final_state.get('num_sources', 0),
             'report': final_state.get('final_report', ''),
-            'report_file': report_filename
+            'report_file': report_filename,
+            'log_file': log_file
         })
     except Exception as e:
+        if 'log_capture' in locals():
+            sys.stdout = old_stdout
+            log_capture.close()
         return jsonify({'error': str(e)}), 500
 
 
@@ -270,9 +309,13 @@ def download(filename):
     try:
         if filename in app.temp_reports:
             pdf_buffer = _markdown_to_pdf(app.temp_reports[filename])
+            # Ensure proper PDF filename
+            pdf_filename = filename.replace('.md', '.pdf') if filename.endswith('.md') else f"{filename}.pdf"
             return send_file(
-                pdf_buffer, mimetype='application/pdf', as_attachment=True,
-                download_name=filename.replace('.md', '.pdf')
+                pdf_buffer, 
+                mimetype='application/pdf',
+                as_attachment=True,
+                download_name=pdf_filename
             )
         return "Report not found", 404
     except Exception as e:

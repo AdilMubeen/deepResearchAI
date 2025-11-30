@@ -1,16 +1,36 @@
+# Environment
 .env
+.env.local
+.env.*.local
+
+# Python
 venv/
 __pycache__/
 *.pyc
+*.pyo
+*.pyd
+.Python
+*.egg-info/
+dist/
+build/
+pip-log.txt
+
+# Outputs
 outputs/
+logs/
 *.log
+
+# IDE
 .DS_Store
 *.swp
 *.swo
 .vscode/
 .idea/
-*.egg-info/
-dist/
-build/
+*.code-workspace
+
+# Scripts with credentials
 push_to_github.sh
+
+# OS
+Thumbs.db
 

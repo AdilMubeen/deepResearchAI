@@ -69,10 +69,7 @@ def search_node(state: ResearchState) -> ResearchState:
             f"{state['target']} controversy scandal investigation",
             f"{state['target']} lawsuit legal criminal charges",
             f"{state['target']} company business financial",
-            f"{state['target']} news recent developments",
-            f"{state['target']} education background",
-            f"{state['target']} board members associates",
-            f"{state['target']} regulatory violations SEC FTC"
+            f"{state['target']} news recent developments"
         ]
     
     print("Executing searches...")

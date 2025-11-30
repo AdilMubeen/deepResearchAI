@@ -16,10 +16,10 @@ TARGET: {target}
 {industry_section}
 {location_section}
 
-CURRENT DEPTH: {depth}/5
+CURRENT DEPTH: {depth}/3
 PREVIOUS FINDINGS: {previous_findings}
 
-Generate exactly 8 diverse, HIGHLY SPECIFIC search queries that will uncover:
+Generate exactly 5 diverse, HIGHLY SPECIFIC search queries that will uncover:
 1. Detailed professional history, education, career transitions, and employment timeline
 2. Financial connections, investments, funding rounds, business dealings, and monetary transactions
 3. Legal issues, lawsuits, criminal charges, regulatory violations, investigations, and court records

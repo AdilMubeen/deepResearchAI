@@ -52,13 +52,7 @@ def main():
     print("DEEP RESEARCH AI AGENT")
     print(f"{'#'*50}")
     print(f"\nTarget: {args.target}")
-    print(f"Max Depth: {args.depth}")
-    
-    try:
-        input("\nPress ENTER to start...")
-    except KeyboardInterrupt:
-        print("\nCancelled")
-        return
+    print(f"Max Depth: {args.depth}\n")
     
     try:
         state = run_research(
