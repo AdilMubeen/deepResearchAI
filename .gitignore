@@ -12,4 +12,5 @@ outputs/
 *.egg-info/
 dist/
 build/
+push_to_github.sh
 
